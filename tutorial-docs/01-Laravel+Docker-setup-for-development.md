@@ -57,7 +57,7 @@ app:
 
 ```dockerfile
 
-FROM php:7.3.2-fpm
+FROM php:7.1.26-fpm
 
 RUN apt-get update && apt-get install -y libmcrypt-dev \
     mysql-client libmagickwand-dev --no-install-recommends \
@@ -66,7 +66,7 @@ RUN apt-get update && apt-get install -y libmcrypt-dev \
     && docker-php-ext-install mcrypt pdo_mysql
 ```
 说明：
-    - 这里用的是 `php:7.3.2-fpm`. 你也可使用其它版本。
+    - 这里用的是 `php:7.1.26-fpm`. 你也可使用其它版本。
     - 其它是基本的 CRUD 库，以及处理图片的 imagick 扩展.
 
 ##### 3.2 Nginx
@@ -173,6 +173,13 @@ alias phpda='docker-compose exec app php artisan '
 TODO:
     我应该写个脚本，可以初始化任何 laravel 环境。
 
+### 后记
+我们可以把 dockerfile, vhost.conf 文件话在 docker 文件中，这样外面只保留一个 docker-compose.yml 文件。
+这样管理起来更加方便。
+
+不过要注意，dockerfile 中的相对目录是 docker-compose 中的这一层目录。
+
 ### References
 1. [Laravel + Docker Part 1 — setup for Development](https://medium.com/@shakyShane/laravel-docker-part-1-setup-for-development-e3daaefaf3c)
-```
+2. [Composer ](https://hub.docker.com/_/composer)
+3. [Do not recommend install composer in docker for production](https://github.com/docker-library/php/issues/344#issuecomment-265014805)

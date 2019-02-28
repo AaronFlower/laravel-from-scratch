@@ -1,0 +1,22 @@
+version: '2'
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: ./docker/app.dockerfile
+
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    environment:
+      - "DB_PORT=3306"
+      - "DB_HOST=database"
+  web:
+    build:
+      context: ./
+      dockerfile: ./docker/web.dockerfile
+    working_dir: /var/www
+    volumes_from:
+      - app
+    ports:
+      - 8080:80
